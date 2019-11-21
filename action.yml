@@ -1,0 +1,28 @@
+name: 'Version Visual Studio SDK projects'
+description: 'Applies version information to Visual Studio SDK project files'
+inputs:
+  version: # id of input
+    description: 'Maps to the Version element'
+    required: true
+  assemblyVersion:
+    description: 'Maps to the AssemblyVersion element'
+    required: true
+  fileVersion:
+    description: 'Maps to the FileVersion element'
+    required: true
+  informationalVersion:
+    description: 'Maps to the InformationalVersion element'
+    required: true
+runs:
+  using: 'docker'
+  image: 'docker://mcr.microsoft.com/powershell:alpine-3.8'
+  args:
+    - pwsh 
+    - version-projects.ps1 
+    - "${{ inputs.version }}"
+    - "${{ inputs.assemblyVersion }}"
+    - "${{ inputs.fileVersion }}"
+    - "${{ inputs.informationalVersion }}"
+branding:
+  icon: bookmark
+  color: blue
