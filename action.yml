@@ -7,16 +7,16 @@ inputs:
     default: '*.*proj'
   version:
     description: 'Maps to the Version element'
-    required: true
+    required: false
   assemblyVersion:
     description: 'Maps to the AssemblyVersion element'
-    required: true
+    required: false
   fileVersion:
     description: 'Maps to the FileVersion element'
-    required: true
+    required: false
   informationalVersion:
     description: 'Maps to the InformationalVersion element'
-    required: true
+    required: false
 runs:
   using: 'docker'
   image: 'docker://mcr.microsoft.com/powershell:alpine-3.8'
