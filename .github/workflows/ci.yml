@@ -37,4 +37,5 @@ jobs:
         dotnet pack "./demo/csharp/csharp.csproj"
         dotnet pack "./demo/fsharp/fsharp.fsproj"
         dotnet pack "./demo/vbnet/vbnet.vbproj"
+        find "${GITHUB_WORKSPACE}" -name *.nupkg
 
