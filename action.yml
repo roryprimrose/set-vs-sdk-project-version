@@ -1,7 +1,11 @@
 name: 'Version Visual Studio SDK projects'
 description: 'Applies version information to Visual Studio SDK project files'
 inputs:
-  version: # id of input
+  projectFilter: # id of input
+    description: 'The wildcard filter that identifies projects to version'
+    required: true
+    default: '*.*proj'
+  version:
     description: 'Maps to the Version element'
     required: true
   assemblyVersion:
@@ -19,6 +23,7 @@ runs:
   args:
     - pwsh 
     - version-projects.ps1 
+    - "${{ inputs.projectFilter }}"
     - "${{ inputs.version }}"
     - "${{ inputs.assemblyVersion }}"
     - "${{ inputs.fileVersion }}"

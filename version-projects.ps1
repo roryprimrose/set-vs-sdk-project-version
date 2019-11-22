@@ -1,4 +1,5 @@
 param (
+    [Parameter(Mandatory=$true)][string]$projectFilter,
     [Parameter(Mandatory=$true)][string]$version,
     [Parameter(Mandatory=$true)][string]$assemblyVersion,
     [Parameter(Mandatory=$true)][string]$fileVersion,
@@ -32,11 +33,11 @@ Write-Output "AssemblyVersion: $assemblyVersion"
 Write-Output "FileVersion: $fileVersion"
 Write-Output "InformationalVersion: $informationalVersion"
 Write-Output ""
-Write-Output "Searching for projects under $sourcesDirectory"
+Write-Output "Searching for projects ($projectFilter) under $sourcesDirectory"
 Write-Output ""
 
 # Find any file that matches the filter and update the contents based on the parameters passed in
-Get-ChildItem -Path $sourcesDirectory -Filter "*.csproj" -Recurse -File | 
+Get-ChildItem -Path $sourcesDirectory -Filter $projectFilter -Recurse -File | 
     ForEach-Object { 
         
         Write-Output "Found project at $($_.FullName)"
