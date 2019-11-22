@@ -27,7 +27,7 @@ runs:
     - ${{ inputs.version }}
     - ${{ inputs.assemblyVersion }}
     - ${{ inputs.fileVersion }}
-    # - ${{ inputs.informationalVersion }}
+    - ${{ inputs.informationalVersion }}
 branding:
   icon: bookmark
   color: blue
