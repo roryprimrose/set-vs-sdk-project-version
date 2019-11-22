@@ -27,3 +27,14 @@ jobs:
         fileVersion: ${{ steps.gitversion.outputs.MajorMinorPatch }}
         informationalVersion: ${{ steps.gitversion.outputs.InformationalVersion }}
       
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.0.100' # SDK Version to use.
+
+    - name: Pack
+      run: |
+        dotnet pack "./demo/csharp/csharp.csproj"
+        dotnet pack "./demo/fsharp/fsharp.fsproj"
+        dotnet pack "./demo/vbnet/vbnet.vbproj"
+
