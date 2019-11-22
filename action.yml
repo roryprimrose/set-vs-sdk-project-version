@@ -22,7 +22,7 @@ runs:
   image: 'docker://mcr.microsoft.com/powershell:alpine-3.8'
   args:
     - pwsh 
-    - version-projectsUPDATED.ps1 
+    - version-projects.ps1 
     - "${{ inputs.projectFilter }}"
     - "${{ inputs.version }}"
     - "${{ inputs.assemblyVersion }}"
