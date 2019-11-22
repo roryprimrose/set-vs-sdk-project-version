@@ -18,3 +18,12 @@ jobs:
     - name: GitVersion
       id: gitversion
       uses: roryprimrose/rungitversion@v1.0.0
+
+    - name: Update project version
+      uses: ./ # Uses an action in the root directory
+      with:
+        version: ${{ steps.gitversion.outputs.NuGetVersionV2 }}
+        assemblyVersion: ${{ steps.gitversion.outputs.AssemblySemVer }}
+        fileVersion: ${{ steps.gitversion.outputs.MajorMinorPatch }}
+        informationalVersion: ${{ steps.gitversion.outputs.InformationalVersion }}
+      
