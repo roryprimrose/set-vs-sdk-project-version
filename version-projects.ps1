@@ -13,7 +13,7 @@ Function Set-NodeValue($rootNode, [string]$nodeName, [string]$value)
     
     $node = $rootNode.Node.SelectSingleNode($nodePath)
 
-    if ($node -eq $null) {
+    if ($null -eq $node) {
         Write-Output "Adding $($nodeName) element to existing PropertyGroup"
 
         $group = $rootNode.Node.SelectSingleNode("PropertyGroup")
