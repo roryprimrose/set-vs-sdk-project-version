@@ -13,7 +13,7 @@ if ([string]::IsNullOrWhiteSpace($projectFilter))
 }
 
 # Check that we have at least one version variable
-if ([string]::IsNullOrWhiteSpace($version) -or [string]::IsNullOrWhiteSpace($assemblyVersion) -or [string]::IsNullOrWhiteSpace($fileVersion) -or [string]::IsNullOrWhiteSpace($informationalVersion))
+if ([string]::IsNullOrWhiteSpace($version) -and [string]::IsNullOrWhiteSpace($assemblyVersion) -and [string]::IsNullOrWhiteSpace($fileVersion) -and [string]::IsNullOrWhiteSpace($informationalVersion))
 {
     throw "At least one version value must be supplied. Add an input parameter for either version, assemblyVersion, fileVersion or informationalVersion."
 }
