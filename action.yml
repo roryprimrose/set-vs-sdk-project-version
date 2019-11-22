@@ -23,7 +23,11 @@ runs:
   args:
     - pwsh 
     - version-projects.ps1 
-    - -projectFilter "${{ inputs.projectFilter }}" -version "${{ inputs.version }}" -assemblyVersion "${{ inputs.assemblyVersion }}" -fileVersion "${{ inputs.fileVersion }}" -informationalVersion "${{ inputs.informationalVersion }}"
+    - "${{ inputs.projectFilter }}"
+    - "${{ inputs.version }}"
+    - "${{ inputs.assemblyVersion }}"
+    - "${{ inputs.fileVersion }}"
+    - "${{ inputs.informationalVersion }}"
 branding:
   icon: bookmark
   color: blue
