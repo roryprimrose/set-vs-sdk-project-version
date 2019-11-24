@@ -21,13 +21,13 @@ runs:
   using: 'docker'
   image: 'docker://mcr.microsoft.com/powershell:alpine-3.8'
   args:
-    - pwsh 
-    - version-projects.ps1 
-    - "${{ inputs.projectFilter }}"
-    - "${{ inputs.version }}"
-    - "${{ inputs.assemblyVersion }}"
-    - "${{ inputs.fileVersion }}"
-    - "${{ inputs.informationalVersion }}"
+    - pwsh
+    - version-projects.ps1
+    - ${{ inputs.projectFilter }}
+    - ${{ inputs.version }}
+    - ${{ inputs.assemblyVersion }}
+    - ${{ inputs.fileVersion }}
+    - ${{ inputs.informationalVersion }}
 branding:
   icon: bookmark
   color: blue

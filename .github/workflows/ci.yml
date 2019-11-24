@@ -17,7 +17,7 @@ jobs:
         
     - name: GitVersion
       id: gitversion
-      uses: roryprimrose/rungitversion@v1.0.0
+      uses: roryprimrose/rungitversion@v1
 
     - name: Update project version
       uses: ./ # Uses an action in the root directory
