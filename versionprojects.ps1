@@ -1,10 +1,3 @@
-
-# $projectFilter = $args[$args.Count - 5]
-# $version = $args[$args.Count - 4]
-# $assemblyVersion = $args[$args.Count - 3]
-# $fileVersion = $args[$args.Count - 2]
-# $informationalVersion = $args[$args.Count - 1]
-
 param (
     [Parameter(Mandatory=$true)][string]$projectFilter,
     [Parameter(Mandatory=$false)][string]$version,
