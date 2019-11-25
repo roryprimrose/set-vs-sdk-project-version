@@ -19,10 +19,8 @@ inputs:
     required: false
 runs:
   using: 'docker'
-  image: 'docker://mcr.microsoft.com/powershell:alpine-3.8'
+  image: 'Dockerfile'
   args:
-    - pwsh
-    - version-projects.ps1
     - ${{ inputs.projectFilter }}
     - ${{ inputs.version }}
     - ${{ inputs.assemblyVersion }}

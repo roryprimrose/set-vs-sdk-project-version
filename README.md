@@ -84,7 +84,12 @@ Clone this repo
 git clone https://github.com/roryprimrose/set-vs-sdk-project-version.git
 ```
 
+Build the image
+```
+docker build -t versionprojects .
+```
+
 Run the container
 ```
-docker run --workdir /github/workspace --rm -v ${PWD}:/github/workspace mcr.microsoft.com/powershell:alpine-3.8 "pwsh" "version-projects.ps1" "*.*proj" "0.1.0-feature-c0016" "0.1.0.0" "0.1.0" "0.1.0-feature-CreateAction.16+Branch.feature-CreateAction.Sha.3a2139d11710900ea10c95b825600560f6388c64"
+docker run --rm -v ${PWD}:/github/workspace versionprojects "*.*proj" "0.1.0-feature-c0016" "0.1.0.0" "0.1.0" "0.1.0-feature-CreateAction.16+Branch.feature-CreateAction.Sha.3a2139d11710900ea10c95b825600560f6388c64"
 ```
