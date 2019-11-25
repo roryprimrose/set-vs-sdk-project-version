@@ -11,7 +11,7 @@ See [action.yml](action.yml)
 Apply all version values to all SDK projects found:
 ```yaml
 - name: Update project version
-  uses: roryprimrose/set-vs-sdk-project-version@v1.0.0
+  uses: roryprimrose/set-vs-sdk-project-version@v1
   with:
     version: ${{ MyVersion }}
     assemblyVersion: ${{ MyAssemblySemVer }}
@@ -22,7 +22,7 @@ Apply all version values to all SDK projects found:
 Only defining the Version value:
 ```yaml
 - name: Update project version
-  uses: roryprimrose/set-vs-sdk-project-version@v1.0.0
+  uses: roryprimrose/set-vs-sdk-project-version@v1
   with:
     version: ${{ MyVersion }}
 ```
@@ -30,7 +30,7 @@ Only defining the Version value:
 Filtering particular projects
 ```yaml
 - name: Update project version
-  uses: roryprimrose/set-vs-sdk-project-version@v1.0.0
+  uses: roryprimrose/set-vs-sdk-project-version@v1
   with:
     projectFilter: '*.csproj'
     version: ${{ MyVersion }}
@@ -53,10 +53,10 @@ steps:
     
 - name: GitVersion
   id: gitversion  # step id used as reference for output values
-  uses: roryprimrose/rungitversion@v1.0.0
+  uses: roryprimrose/rungitversion@v1
 
 - name: Update project version
-  uses: roryprimrose/set-vs-sdk-project-version@v1.0.0
+  uses: roryprimrose/set-vs-sdk-project-version@v1
   with:
     version: ${{ steps.gitversion.outputs.NuGetVersionV2 }}
     assemblyVersion: ${{ steps.gitversion.outputs.AssemblySemVer }}
@@ -70,6 +70,9 @@ steps:
 ```
 
 # Changelog
+
+## v1.0.2
+- Updated to use Dockerfile to run the action
 
 ## v1.0.0
 - Initial release
