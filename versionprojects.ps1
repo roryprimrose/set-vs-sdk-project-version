@@ -1,21 +1,17 @@
-foreach ($i in $args)
-{
-    Write-Host $i
-}
 
-$projectFilter = $args[$args.Count - 5]
-$version = $args[$args.Count - 4]
-$assemblyVersion = $args[$args.Count - 3]
-$fileVersion = $args[$args.Count - 2]
-$informationalVersion = $args[$args.Count - 1]
+# $projectFilter = $args[$args.Count - 5]
+# $version = $args[$args.Count - 4]
+# $assemblyVersion = $args[$args.Count - 3]
+# $fileVersion = $args[$args.Count - 2]
+# $informationalVersion = $args[$args.Count - 1]
 
-# param (
-#     [Parameter(Mandatory=$true)][string]$projectFilter,
-#     [Parameter(Mandatory=$false)][string]$version,
-#     [Parameter(Mandatory=$false)][string]$assemblyVersion,
-#     [Parameter(Mandatory=$false)][string]$fileVersion,
-#     [Parameter(Mandatory=$false)][string]$informationalVersion
-# )
+param (
+    [Parameter(Mandatory=$true)][string]$projectFilter,
+    [Parameter(Mandatory=$false)][string]$version,
+    [Parameter(Mandatory=$false)][string]$assemblyVersion,
+    [Parameter(Mandatory=$false)][string]$fileVersion,
+    [Parameter(Mandatory=$false)][string]$informationalVersion
+)
 
 # Check that we have a project filter
 if ([string]::IsNullOrWhiteSpace($projectFilter))
