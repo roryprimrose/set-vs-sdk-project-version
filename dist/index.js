@@ -968,9 +968,7 @@ async function run() {
           }
         };
 
-        await exec.exec('dir', options);
-
-        var result = await exec.exec('pwsh', ['-File', 'version-projects.ps1', projectFilter, version, assemblyVersion, fileVersion, informationalVersion], options);
+        var result = await exec.exec('pwsh', ['-File', './version-projects.ps1', projectFilter, version, assemblyVersion, fileVersion, informationalVersion], options);
 
         core.info(myOutput);
 
