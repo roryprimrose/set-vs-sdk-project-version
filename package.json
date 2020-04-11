@@ -1,0 +1,24 @@
+{
+  "name": "set-vs-sdk-project-version",
+  "version": "1.0.0",
+  "description": "[![Actions Status](https://github.com/roryprimrose/set-vs-sdk-project-version/workflows/CI/badge.svg)](https://github.com/roryprimrose/set-vs-sdk-project-version/actions)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roryprimrose/set-vs-sdk-project-version.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/roryprimrose/set-vs-sdk-project-version/issues"
+  },
+  "homepage": "https://github.com/roryprimrose/set-vs-sdk-project-version#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.3",
+    "@actions/exec": "^1.0.3"
+  }
+}

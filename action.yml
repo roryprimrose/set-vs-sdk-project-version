@@ -18,14 +18,8 @@ inputs:
     description: 'Maps to the InformationalVersion element'
     required: false
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.projectFilter }}
-    - ${{ inputs.version }}
-    - ${{ inputs.assemblyVersion }}
-    - ${{ inputs.fileVersion }}
-    - ${{ inputs.informationalVersion }}
+  using: 'node12'
+  main: 'index.js'
 branding:
   icon: bookmark
   color: blue
