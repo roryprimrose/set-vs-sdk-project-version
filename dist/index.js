@@ -947,7 +947,7 @@ module.exports = require("os");
 const core = __webpack_require__(470);
 const exec = __webpack_require__(986);
 
-function run() {
+async function run() {
     try {
         const projectFilter = core.getInput('projectFilter');
         const version = core.getInput('version');
@@ -955,7 +955,27 @@ function run() {
         const fileVersion = core.getInput('fileVersion');
         const informationalVersion = core.getInput('informationalVersion');
 
-        exec.exec('pwsh', ['version-projects.ps1', projectFilter, version, assemblyVersion, fileVersion, informationalVersion]);
+        var myError = '';
+        var myOutput = '';
+
+        const options = {};
+        options.listeners = {
+          stdout: (data) => {
+            myOutput += data.toString();
+          },
+          stderr: (data) => {
+            myError += data.toString();
+          }
+        };
+
+        var result = await exec.exec('pwsh', ['-File', 'version-projects.ps1', projectFilter, version, assemblyVersion, fileVersion, informationalVersion], options);
+
+        core.info(myOutput);
+
+        if (result !== 0) {
+            core.error(myError);
+        }
+        
     } catch (error) {
         core.setFailed(error.message);
     }
