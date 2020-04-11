@@ -1,5 +1,6 @@
 const core = require('@actions/core');
 const exec = require('@actions/exec');
+const glob = require('@actions/glob');
 
 async function run() {
     try {
@@ -8,6 +9,12 @@ async function run() {
         const assemblyVersion = core.getInput('assemblyVersion');
         const fileVersion = core.getInput('fileVersion');
         const informationalVersion = core.getInput('informationalVersion');
+
+        const globber = await glob.create('**')
+        
+        for await (const file of globber.globGenerator()) {
+          console.log(file)
+        }
 
         var myError = '';
         var myOutput = '';
