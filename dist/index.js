@@ -1062,7 +1062,6 @@ function regExpEscape (s) {
 /***/ (function(__unusedmodule, __unusedexports, __webpack_require__) {
 
 const core = __webpack_require__(470);
-const exec = __webpack_require__(952);
 const glob = __webpack_require__(281);
 const fs = __webpack_require__(747).promises;
 const promisify = __webpack_require__(669).promisify;
@@ -8971,14 +8970,6 @@ class Pattern {
 }
 exports.Pattern = Pattern;
 //# sourceMappingURL=internal-pattern.js.map
-
-/***/ }),
-
-/***/ 952:
-/***/ (function() {
-
-eval("require")("@actions/exec");
-
 
 /***/ }),
 

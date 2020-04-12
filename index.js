@@ -1,5 +1,4 @@
 const core = require('@actions/core');
-const exec = require('@actions/exec');
 const glob = require('@actions/glob');
 const fs = require('fs').promises;
 const promisify = require('util').promisify;
