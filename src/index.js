@@ -33,13 +33,13 @@ async function run() {
 
         core.info('')
         core.info(`Finding projects matching ${options.projectFilter}`);
-        core.info('')
 
         const globber = await glob.create(options.projectFilter)
 
         const project = new Project();
 
         for await (const file of globber.globGenerator()) {
+            core.info('')
             core.info(`Found project at ${file}`);
 
             let originalProject = await fs.readFile(file);

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "action": "set INPUT_projectFilter=**/*.csproj&&set INPUT_version=0.1.0-feature-c0016&&set INPUT_assemblyVersion=0.1.0.0&&set INPUT_fileVersion=0.1.0&&set INPUT_informationalVersion=0.1.0-feature-CreateAction.16+Branch.feature-CreateAction.Sha.3a2139d11710900ea10c95b825600560f6388c64&&node --inspect-brk src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --testMatch **/*.tests.js --coverage=true",
     "package": "ncc build src/index.js -o dist"
   },
   "repository": {

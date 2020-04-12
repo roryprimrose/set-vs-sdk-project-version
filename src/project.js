@@ -5,7 +5,14 @@ const xml2js = require('xml2js');
 class Project {
     async setVersion(data, options) {
 
-        if (options.version === "" 
+        if (!data) {
+            throw { message: 'No data has been provided.' };
+        }
+        
+        if (!options) {
+            throw { message: 'No options have been provided.' };
+        }
+        else if (options.version === "" 
             && options.assemblyVersion === "" 
             && options.fileVersion === "" 
             && options.informationalVersion === "")
@@ -28,7 +35,7 @@ class Project {
         }
 
         if (options.informationalVersion) {
-            this.applyVersion(xml, 'informationalVersion', options.informationalVersion);
+            this.applyVersion(xml, 'InformationalVersion', options.informationalVersion);
         }
 
         const updatedXml = this.writeXml(xml);
