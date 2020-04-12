@@ -4,6 +4,7 @@
   "description": "[![Actions Status](https://github.com/roryprimrose/set-vs-sdk-project-version/workflows/CI/badge.svg)](https://github.com/roryprimrose/set-vs-sdk-project-version/actions)",
   "main": "index.js",
   "scripts": {
+    "action": "set INPUT_projectFilter=**/*.csproj&&set INPUT_version=1.2.3&&node --inspect-brk index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "package": "ncc build index.js -o dist"
   },
@@ -20,8 +21,10 @@
   "homepage": "https://github.com/roryprimrose/set-vs-sdk-project-version#readme",
   "dependencies": {
     "@actions/core": "^1.2.3",
-    "@actions/exec": "^1.0.3",
-    "@actions/glob": "^0.1.0"
+    "@actions/glob": "^0.1.0",
+    "fs": "0.0.1-security",
+    "util": "^0.12.2",
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {
     "@zeit/ncc": "^0.20.5",

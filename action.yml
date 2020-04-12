@@ -4,7 +4,7 @@ inputs:
   projectFilter: # id of input
     description: 'The wildcard filter that identifies projects to version'
     required: true
-    default: '*.*proj'
+    default: '**/*.*proj'
   version:
     description: 'Maps to the Version element'
     required: false
