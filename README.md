@@ -71,6 +71,9 @@ steps:
 
 # Changelog
 
+## v1.0.3
+- Updated to use JavaScript to run the action
+
 ## v1.0.2
 - Updated to use Dockerfile to run the action
 
@@ -87,12 +90,7 @@ Clone this repo
 git clone https://github.com/roryprimrose/set-vs-sdk-project-version.git
 ```
 
-Build the image
+Run the action
 ```
-docker build -t versionprojects .
-```
-
-Run the container
-```
-docker run --rm -v ${PWD}:/github/workspace versionprojects "*.*proj" "0.1.0-feature-c0016" "0.1.0.0" "0.1.0" "0.1.0-feature-CreateAction.16+Branch.feature-CreateAction.Sha.3a2139d11710900ea10c95b825600560f6388c64"
+npm run action
 ```

@@ -34,7 +34,7 @@ module.exports =
 /******/ 	// the startup function
 /******/ 	function startup() {
 /******/ 		// Load entry module and return exports
-/******/ 		return __webpack_require__(104);
+/******/ 		return __webpack_require__(676);
 /******/ 	};
 /******/
 /******/ 	// run startup
@@ -1055,108 +1055,6 @@ function regExpEscape (s) {
   return s.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
 }
 
-
-/***/ }),
-
-/***/ 104:
-/***/ (function(__unusedmodule, __unusedexports, __webpack_require__) {
-
-const core = __webpack_require__(470);
-const glob = __webpack_require__(281);
-const fs = __webpack_require__(747).promises;
-const promisify = __webpack_require__(669).promisify;
-const xml2js = __webpack_require__(992);
-
-async function run() {
-    try {
-        const projectFilter = core.getInput('projectFilter', { required: true });
-
-        let options = {
-            version: core.getInput('version'),
-            assemblyVersion: core.getInput('assemblyVersion'),
-            fileVersion: core.getInput('fileVersion'),
-            informationalVersion: core.getInput('informationalVersion')
-        };
-
-        core.info(`Finding projects matching ${projectFilter}`);
-
-        const globber = await glob.create(projectFilter)
-
-        for await (const file of globber.globGenerator()) {
-            processFile(file, options);
-        }       
-    } catch (error) {
-        core.setFailed(error.message);
-    }
-}
-
-async function processFile(filepath, options) {
-    core.info(`Processing file ${filepath}`);
-
-    let xml = await fs.readFile(filepath);
-
-    const parser = new xml2js.Parser();
-
-    const parseString = promisify(parser.parseString);
-
-    let result = await parseString(xml);
-
-    writeVersionData(result, options);
-
-    const builder = new xml2js.Builder({headless: true});
-
-    var updatedXml = await builder.buildObject(result);
-
-    await fs.writeFile(filepath, updatedXml);
-
-    core.info(JSON.stringify(result));
-}
-
-function writeVersionData(xml, options) {
-    if (options.version) {
-        applyVersion(xml, 'Version', options.version);
-    }
-
-    if (options.assemblyVersion) {
-        applyVersion(xml, 'AssemblyVersion', options.assemblyVersion);
-    }
-
-    if (options.fileVersion) {
-        applyVersion(xml, 'FileVersion', options.fileVersion);
-    }
-
-    if (options.informationalVersion) {
-        applyVersion(xml, 'informationalVersion', options.informationalVersion);
-    }
-}
-
-function applyVersion(xml, elementName, value) {
-    let matchingElement;
-    
-    for (let propertyGroupIndex = 0; propertyGroupIndex < xml.Project.PropertyGroup.length; propertyGroupIndex++) {
-        let propertyGroup = xml.Project.PropertyGroup[propertyGroupIndex];
-
-        matchingElement = propertyGroup[elementName];
-
-        if (matchingElement) {
-            break;
-        }
-    }
-
-    if (matchingElement) {
-        core.info(`Updating PropertyGroup element ${elementName} with the value ${value}`);
-
-        matchingElement[0] = value;
-    }
-    else {
-        // There isn't an xml element with the expected name
-        core.info(`PropertyGroup element ${elementName} does not exist, adding it with the value ${value}`);
-
-        xml.Project.PropertyGroup[0][elementName] = value;
-    }
-}
-
-run()
 
 /***/ }),
 
@@ -3154,6 +3052,96 @@ exports.getState = getState;
 
 }).call(this);
 
+
+/***/ }),
+
+/***/ 505:
+/***/ (function(module, __unusedexports, __webpack_require__) {
+
+const core = __webpack_require__(470);
+const promisify = __webpack_require__(669).promisify;
+const xml2js = __webpack_require__(992);
+
+class Project {
+    async setVersion(data, options) {
+
+        if (options.version === "" 
+            && options.assemblyVersion === "" 
+            && options.fileVersion === "" 
+            && options.informationalVersion === "")
+        {
+            throw { message: 'At least one version value must be supplied. Add an input parameter for either version, assemblyVersion, fileVersion or informationalVersion.' };
+        }
+        
+        let xml = await this.readXml(data);
+
+        if (options.version) {
+            this.applyVersion(xml, 'Version', options.version);
+        }
+
+        if (options.assemblyVersion) {
+            this.applyVersion(xml, 'AssemblyVersion', options.assemblyVersion);
+        }
+
+        if (options.fileVersion) {
+            this.applyVersion(xml, 'FileVersion', options.fileVersion);
+        }
+
+        if (options.informationalVersion) {
+            this.applyVersion(xml, 'informationalVersion', options.informationalVersion);
+        }
+
+        const updatedXml = this.writeXml(xml);
+        
+        return updatedXml;
+    }
+
+    async readXml(data) {       
+        const parser = new xml2js.Parser();
+
+        const parseString = promisify(parser.parseString);
+
+        let result = await parseString(data);
+
+        return result;
+    }
+
+    async writeXml(xml) {
+        const builder = new xml2js.Builder({headless: true});
+
+        var updatedXml = await builder.buildObject(xml);
+    
+        return updatedXml;
+    }
+
+    applyVersion(xml, elementName, value) {
+        let matchingElement;
+        
+        for (let propertyGroupIndex = 0; propertyGroupIndex < xml.Project.PropertyGroup.length; propertyGroupIndex++) {
+            let propertyGroup = xml.Project.PropertyGroup[propertyGroupIndex];
+
+            matchingElement = propertyGroup[elementName];
+
+            if (matchingElement) {
+                break;
+            }
+        }
+
+        if (matchingElement) {
+            core.info(`Updating ${elementName} with the value ${value}`);
+
+            matchingElement[0] = value;
+        }
+        else {
+            // There isn't an xml element with the expected name
+            core.info(`${elementName} does not exist, adding it with the value ${value}`);
+
+            xml.Project.PropertyGroup[0][elementName] = value;
+        }
+    }
+}
+
+module.exports = Project;
 
 /***/ }),
 
@@ -5955,6 +5943,68 @@ module.exports = require("path");
 /***/ (function(module) {
 
 module.exports = require("util");
+
+/***/ }),
+
+/***/ 676:
+/***/ (function(__unusedmodule, __unusedexports, __webpack_require__) {
+
+const core = __webpack_require__(470);
+const glob = __webpack_require__(281);
+const fs = __webpack_require__(747).promises;
+const Project = __webpack_require__(505)
+
+async function run() {
+    try {
+        let options = {
+            projectFilter: core.getInput('projectFilter', { required: true }),
+            version: core.getInput('version'),
+            assemblyVersion: core.getInput('assemblyVersion'),
+            fileVersion: core.getInput('fileVersion'),
+            informationalVersion: core.getInput('informationalVersion')
+        };
+
+        core.info('Updating project files with the following version information');
+
+        if (options.version !== "") {            
+            core.info(`Version: ${options.version}`);
+        }
+
+        if (options.assemblyVersion !== "") {            
+            core.info(`AssemblyVersion: ${options.assemblyVersion}`);
+        }
+
+        if (options.fileVersion !== "") {            
+            core.info(`FileVersion: ${options.fileVersion}`);
+        }
+
+        if (options.informationalVersion !== "") {            
+            core.info(`InformationalVersion: ${options.informationalVersion}`);
+        }
+
+        core.info('')
+        core.info(`Finding projects matching ${options.projectFilter}`);
+        core.info('')
+
+        const globber = await glob.create(options.projectFilter)
+
+        const project = new Project();
+
+        for await (const file of globber.globGenerator()) {
+            core.info(`Found project at ${file}`);
+
+            let originalProject = await fs.readFile(file);
+        
+            let updatedProject = await project.setVersion(originalProject, options);
+
+            await fs.writeFile(file, updatedProject);
+        }
+    } catch (error) {
+        core.setFailed(error.message);
+    }
+}
+
+run()
 
 /***/ }),
 
