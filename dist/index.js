@@ -3065,10 +3065,17 @@ const xml2js = __webpack_require__(992);
 class Project {
     async setVersion(data, options) {
 
-        if (options.version === "" 
-            && options.assemblyVersion === "" 
-            && options.fileVersion === "" 
-            && options.informationalVersion === "")
+        if (!data) {
+            throw { message: 'No data has been provided.' };
+        }
+        
+        if (!options) {
+            throw { message: 'No options have been provided.' };
+        }
+        else if (options.version === '' 
+            && options.assemblyVersion === '' 
+            && options.fileVersion === '' 
+            && options.informationalVersion === '')
         {
             throw { message: 'At least one version value must be supplied. Add an input parameter for either version, assemblyVersion, fileVersion or informationalVersion.' };
         }
@@ -3088,7 +3095,7 @@ class Project {
         }
 
         if (options.informationalVersion) {
-            this.applyVersion(xml, 'informationalVersion', options.informationalVersion);
+            this.applyVersion(xml, 'InformationalVersion', options.informationalVersion);
         }
 
         const updatedXml = this.writeXml(xml);
@@ -3107,7 +3114,14 @@ class Project {
     }
 
     async writeXml(xml) {
-        const builder = new xml2js.Builder({headless: true});
+        const builder = new xml2js.Builder(
+        {
+            headless: true,
+            renderOpts: {
+                'pretty': true, 
+                'indent': '    '
+            }
+        });
 
         var updatedXml = await builder.buildObject(xml);
     
@@ -3115,22 +3129,24 @@ class Project {
     }
 
     applyVersion(xml, elementName, value) {
-        let matchingElement;
+        let parentElement;
         
         for (let propertyGroupIndex = 0; propertyGroupIndex < xml.Project.PropertyGroup.length; propertyGroupIndex++) {
             let propertyGroup = xml.Project.PropertyGroup[propertyGroupIndex];
 
-            matchingElement = propertyGroup[elementName];
+            if (elementName in propertyGroup) {
+                parentElement = propertyGroup;
+            }
 
-            if (matchingElement) {
+            if (parentElement) {
                 break;
             }
         }
 
-        if (matchingElement) {
+        if (parentElement) {
             core.info(`Updating ${elementName} with the value ${value}`);
 
-            matchingElement[0] = value;
+            parentElement[elementName] = value;
         }
         else {
             // There isn't an xml element with the expected name
@@ -5964,6 +5980,9 @@ async function run() {
             informationalVersion: core.getInput('informationalVersion')
         };
 
+        core.info('')
+        core.info(`Finding projects matching ${options.projectFilter}`);
+        core.info('')
         core.info('Updating project files with the following version information');
 
         if (options.version !== "") {            
@@ -5982,15 +6001,13 @@ async function run() {
             core.info(`InformationalVersion: ${options.informationalVersion}`);
         }
 
-        core.info('')
-        core.info(`Finding projects matching ${options.projectFilter}`);
-        core.info('')
-
         const globber = await glob.create(options.projectFilter)
 
         const project = new Project();
 
         for await (const file of globber.globGenerator()) {
+            core.info('')
+            core.info('')
             core.info(`Found project at ${file}`);
 
             let originalProject = await fs.readFile(file);

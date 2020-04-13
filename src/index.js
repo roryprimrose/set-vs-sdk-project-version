@@ -13,6 +13,9 @@ async function run() {
             informationalVersion: core.getInput('informationalVersion')
         };
 
+        core.info('')
+        core.info(`Finding projects matching ${options.projectFilter}`);
+        core.info('')
         core.info('Updating project files with the following version information');
 
         if (options.version !== "") {            
@@ -31,14 +34,12 @@ async function run() {
             core.info(`InformationalVersion: ${options.informationalVersion}`);
         }
 
-        core.info('')
-        core.info(`Finding projects matching ${options.projectFilter}`);
-
         const globber = await glob.create(options.projectFilter)
 
         const project = new Project();
 
         for await (const file of globber.globGenerator()) {
+            core.info('')
             core.info('')
             core.info(`Found project at ${file}`);
 

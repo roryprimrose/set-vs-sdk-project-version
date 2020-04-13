@@ -12,10 +12,10 @@ class Project {
         if (!options) {
             throw { message: 'No options have been provided.' };
         }
-        else if (options.version === "" 
-            && options.assemblyVersion === "" 
-            && options.fileVersion === "" 
-            && options.informationalVersion === "")
+        else if (options.version === '' 
+            && options.assemblyVersion === '' 
+            && options.fileVersion === '' 
+            && options.informationalVersion === '')
         {
             throw { message: 'At least one version value must be supplied. Add an input parameter for either version, assemblyVersion, fileVersion or informationalVersion.' };
         }
@@ -54,7 +54,14 @@ class Project {
     }
 
     async writeXml(xml) {
-        const builder = new xml2js.Builder({headless: true});
+        const builder = new xml2js.Builder(
+        {
+            headless: true,
+            renderOpts: {
+                'pretty': true, 
+                'indent': '    '
+            }
+        });
 
         var updatedXml = await builder.buildObject(xml);
     
@@ -62,22 +69,24 @@ class Project {
     }
 
     applyVersion(xml, elementName, value) {
-        let matchingElement;
+        let parentElement;
         
         for (let propertyGroupIndex = 0; propertyGroupIndex < xml.Project.PropertyGroup.length; propertyGroupIndex++) {
             let propertyGroup = xml.Project.PropertyGroup[propertyGroupIndex];
 
-            matchingElement = propertyGroup[elementName];
+            if (elementName in propertyGroup) {
+                parentElement = propertyGroup;
+            }
 
-            if (matchingElement) {
+            if (parentElement) {
                 break;
             }
         }
 
-        if (matchingElement) {
+        if (parentElement) {
             core.info(`Updating ${elementName} with the value ${value}`);
 
-            matchingElement[0] = value;
+            parentElement[elementName] = value;
         }
         else {
             // There isn't an xml element with the expected name
