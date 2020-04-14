@@ -4,7 +4,7 @@ inputs:
   projectFilter: # id of input
     description: 'The wildcard filter that identifies projects to version'
     required: true
-    default: '*.*proj'
+    default: '**/*.*proj'
   version:
     description: 'Maps to the Version element'
     required: false
@@ -18,14 +18,8 @@ inputs:
     description: 'Maps to the InformationalVersion element'
     required: false
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.projectFilter }}
-    - ${{ inputs.version }}
-    - ${{ inputs.assemblyVersion }}
-    - ${{ inputs.fileVersion }}
-    - ${{ inputs.informationalVersion }}
+  using: 'node12'
+  main: 'dist/index.js'
 branding:
   icon: bookmark
   color: blue

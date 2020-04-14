@@ -1,0 +1,34 @@
+{
+  "name": "set-vs-sdk-project-version",
+  "version": "1.0.0",
+  "description": "[![Actions Status](https://github.com/roryprimrose/set-vs-sdk-project-version/workflows/CI/badge.svg)](https://github.com/roryprimrose/set-vs-sdk-project-version/actions)",
+  "main": "index.js",
+  "scripts": {
+    "action": "set INPUT_projectFilter=**/*.csproj&&set INPUT_version=0.1.0-feature-c0016&&set INPUT_assemblyVersion=0.1.0.0&&set INPUT_fileVersion=0.1.0&&set INPUT_informationalVersion=0.1.0-feature-CreateAction.16+Branch.feature-CreateAction.Sha.3a2139d11710900ea10c95b825600560f6388c64&&node --inspect-brk src/index.js",
+    "test": "jest --testMatch **/*.tests.js --coverage=true",
+    "package": "ncc build src/index.js -o dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roryprimrose/set-vs-sdk-project-version.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/roryprimrose/set-vs-sdk-project-version/issues"
+  },
+  "homepage": "https://github.com/roryprimrose/set-vs-sdk-project-version#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.3",
+    "@actions/glob": "^0.1.0",
+    "fs": "0.0.1-security",
+    "util": "^0.12.2",
+    "xml2js": "^0.4.23"
+  },
+  "devDependencies": {
+    "@zeit/ncc": "^0.20.5",
+    "eslint": "^6.3.0",
+    "jest": "^24.9.0"
+  }
+}
