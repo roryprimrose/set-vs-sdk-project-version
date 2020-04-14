@@ -9,7 +9,7 @@ on:
       - '**'
 
 jobs:
-  build:
+  Build:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,7 +27,7 @@ jobs:
       with:
         file: ./coverage/lcov.info
 
-  Acceptance Test:
+  Acceptance_Test:
     runs-on: ubuntu-latest
 
     steps:
