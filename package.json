@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/roryprimrose/set-vs-sdk-project-version#readme",
   "dependencies": {
-    "@actions/core": "^1.2.3",
+    "@actions/core": "^1.2.6",
     "@actions/glob": "^0.1.0",
     "fs": "0.0.1-security",
     "util": "^0.12.2",
